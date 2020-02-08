@@ -2,6 +2,24 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style type="text/css">
+      div.audio-file-info {
+        display: block;
+        margin: 15px;
+      }
+      h2.shortcut-title {
+        display: inline;
+        color:blue;
+        line-height:1.5;
+      }
+      p.file-full-path {
+        display: inline;
+        margin: 5px;
+      }
+      div.audio-file-input {
+        display: block;
+      }
+    </style>
     <script>
       // electron
       const electron = require('electron');
@@ -13,12 +31,13 @@
       const el = React.createElement;
       var settings = {};
 
-        // console.logをターミナルに出力するためにメインプロセスのconsoleに置き換える
-        // MEMO: DOM elementなどレンダラープロセス専用のオブジェクトを渡そうとするとその行で固まるので注意！！！
-        console = remote.require('console');
+      // console.logをターミナルに出力するためにメインプロセスのconsoleに置き換える
+      // MEMO: DOM elementなどレンダラープロセス専用のオブジェクトを渡そうとするとその行で固まるので注意！！！
+      console = remote.require('console');
 
       ipcRenderer.on('current-settings', (event, data) => {
-        console.log('current-settings: '+settings);
+        console.log('current-settings: ');
+        console.log(data)
         settings = data
         renderDOM();
       })
@@ -31,21 +50,23 @@
           ipcRenderer.send('update-settings', settings);
         }
         render(){
-          return el('input', {type: 'file', onChange: this.onChange.bind(this) })
+          return el('div', {className: 'audio-file-input'}, 
+            el('input', {type: 'file', onChange: this.onChange.bind(this) })
+          )
         }
       }
 
       class AudioFilePath extends React.Component {
         render(){
           const filepath = settings[this.props.num];
-          return el('p', null, filepath)
+          return el('p', {className: 'file-full-path'}, filepath)
         }
       }
 
       class AudioFileInfo extends React.Component {
         render() {
-          return el('div', null,
-            el('h2', null, `shift+ctrl+alt+${this.props.num}`),
+          return el('div', {className: 'audio-file-info'},
+            el('h2', {className: 'shortcut-title'}, `shift+ctrl+alt+${this.props.num}`),
             el(AudioFilePath, {num: this.props.num}),
             el(AudioFileInput, {num: this.props.num})
           )

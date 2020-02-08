@@ -140,7 +140,7 @@ function showInvisiblePlayerWindow(mp3path){
 // 設定画面を表示する関数
 function showSettingsWindow(){
   settingsWindow = new BrowserWindow({
-    width: 1800,
+    width: 900,
     height: 1000,
     webPreferences: {
       nodeIntegration: true
