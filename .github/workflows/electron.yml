@@ -23,12 +23,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - name: yarn install
+      - name: npm install
         run: |
-          yarn install
-      - name: Publish
+          npm install
+      - name: Build
         run: |
-          yarn run dist
+          npm dist
       - name: Cleanup artifacts
         run: |
           npx rimraf "dist/!(*.exe|*.deb|*.AppImage|*.dmg)"
