@@ -1,0 +1,33 @@
+<html>
+<head>
+<script>
+  const electron = require('electron');
+  const remote = electron.remote;
+  const ipcRenderer = electron.ipcRenderer;
+  // console.logをターミナルに出力するためにメインプロセスのconsoleに置き換える
+  // MEMO: DOM elementなどレンダラープロセス専用のオブジェクトを渡そうとするとその行で固まるので注意！！！
+  console = remote.require('console');
+  console.log('invisible.html loaded');
+  ipcRenderer.on('close', () => {
+    window.close();
+  })
+  ipcRenderer.on('play-music', (event, data) => {
+    console.log('ipc on: play-music, data: ');
+    console.log(data);
+    var audio = new Audio();
+    document.body.appendChild(audio);
+    audio.addEventListener('ended', (e)=>{
+      console.log('audio: ended');
+      window.close();
+    })
+    audio.src = data;
+    audio.autoplay = true;
+    audio.load();
+  });
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

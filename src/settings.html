@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      // electron
+      const electron = require('electron');
+      const remote = electron.remote;
+      const ipcRenderer = electron.ipcRenderer;
+      // react
+      const React = require('react');
+      const ReactDOM = require('react-dom');
+      const el = React.createElement;
+      var settings = {};
+
+        // console.logをターミナルに出力するためにメインプロセスのconsoleに置き換える
+        // MEMO: DOM elementなどレンダラープロセス専用のオブジェクトを渡そうとするとその行で固まるので注意！！！
+        console = remote.require('console');
+
+      ipcRenderer.on('current-settings', (event, data) => {
+        console.log('current-settings: '+settings);
+        settings = data
+        renderDOM();
+      })
+
+      class AudioFileInput extends React.Component {
+        onChange(event){
+          console.log('input file onChange: ');
+          console.log(event.target.files[0].path)
+          settings[this.props.num] = event.target.files[0].path;
+          ipcRenderer.send('update-settings', settings);
+        }
+        render(){
+          return el('input', {type: 'file', onChange: this.onChange.bind(this) })
+        }
+      }
+
+      class AudioFilePath extends React.Component {
+        render(){
+          const filepath = settings[this.props.num];
+          return el('p', null, filepath)
+        }
+      }
+
+      class AudioFileInfo extends React.Component {
+        render() {
+          return el('div', null,
+            el('h2', null, `shift+ctrl+alt+${this.props.num}`),
+            el(AudioFilePath, {num: this.props.num}),
+            el(AudioFileInput, {num: this.props.num})
+          )
+        }
+      }
+
+      // TODO だれかリファクタリングして
+      function renderDOM(){
+        ReactDOM.render(
+            el('div', null,
+              el(AudioFileInfo, {num: 1}, null),
+              el(AudioFileInfo, {num: 2}, null),
+              el(AudioFileInfo, {num: 3}, null),
+              el(AudioFileInfo, {num: 4}, null),
+              el(AudioFileInfo, {num: 5}, null),
+              el(AudioFileInfo, {num: 6}, null),
+              el(AudioFileInfo, {num: 7}, null),
+              el(AudioFileInfo, {num: 8}, null),
+              el(AudioFileInfo, {num: 9}, null),
+              el(AudioFileInfo, {num: 0}, null),
+            ),
+            document.getElementById('react-root')
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <h1>YuisekinTV SE: Settings</h1>
+
+    <div id="react-root"></div>
+
+    <div class="footer">
+      We are using io.js <script>document.write(process.version)</script>
+      and Electron <script>document.write(process.versions['electron'])</script>.
+    </div>
+  </body>
+</html>
