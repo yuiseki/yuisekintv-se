@@ -29,9 +29,6 @@ jobs:
       - name: Build
         run: |
           npm run dist
-      - name: Cleanup artifacts
-        run: |
-          rm -rf dist/*
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
