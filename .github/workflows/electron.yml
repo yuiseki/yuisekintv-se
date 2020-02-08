@@ -28,6 +28,9 @@ jobs:
           npm install
       - name: Build
         run: |
+          shx rm "dist/!(*.exe|*.deb|*.AppImage|*.dmg)"
+      - name: Cleanup artifacts
+        run: |
           npm run dist
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
