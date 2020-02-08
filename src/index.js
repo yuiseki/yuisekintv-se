@@ -20,6 +20,7 @@ const ipcMain = electron.ipcMain;
 let settingsWindow = null;
 let invisibleWindow = null;
 // trayIconもGCされないようにグローバル宣言
+let trayIconPath = upath.join(__dirname, "src", "images", "icon.png");
 let trayIcon = null;
 // 設定データがGCされないようにグローバル宣言
 let settings = null;
@@ -160,7 +161,6 @@ function showSettingsWindow(){
 // タスクトレイにアイコンを表示する関数
 function createTray(){
   // タスクトレイに表示するアイコンを指定（必須）
-  trayIconPath = upath.join(__dirname, "src", "images", "icon.png");
   trayIcon = new Tray(trayIconPath);
   // タスクトレイアイコンにマウスを載せたときのタイトルを指定
   trayIcon.setToolTip('YuisekinTV SE');
