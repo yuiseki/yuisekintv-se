@@ -28,10 +28,11 @@ jobs:
           npm install
       - name: Build
         run: |
-          shx rm "dist/!(*.exe|*.deb|*.AppImage|*.dmg)"
+          npm run dist
       - name: Cleanup artifacts
         run: |
-          npm run dist
+          npm install shelljs -g
+          shx rm "dist/!(*.exe|*.deb|*.AppImage|*.dmg)"
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
