@@ -28,7 +28,7 @@ jobs:
           npm install
       - name: Build
         run: |
-          npm dist
+          npm run dist
       - name: Cleanup artifacts
         run: |
           npx rimraf "dist/!(*.exe|*.deb|*.AppImage|*.dmg)"
