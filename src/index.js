@@ -4,6 +4,9 @@
 const path = require('path');
 const fs = require('fs');
 
+// npmのモジュール
+const upath = require('upath')
+
 // Electronのモジュール
 const electron = require("electron");
 const app = electron.app;
@@ -157,7 +160,8 @@ function showSettingsWindow(){
 // タスクトレイにアイコンを表示する関数
 function createTray(){
   // タスクトレイに表示するアイコンを指定（必須）
-  trayIcon = new Tray('./src/images/icon.png');
+  trayIconPath = upath.join(__dirname, "src", "images", "icon.png");
+  trayIcon = new Tray(trayIconPath);
   // タスクトレイアイコンにマウスを載せたときのタイトルを指定
   trayIcon.setToolTip('YuisekinTV SE');
 
