@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 // npmのモジュール
-const upath = require('upath')
+const upath = require('upath');
 
 // Electronのモジュール
 const electron = require("electron");
@@ -20,7 +20,7 @@ const ipcMain = electron.ipcMain;
 let settingsWindow = null;
 let invisibleWindow = null;
 // trayIconもGCされないようにグローバル宣言
-let trayIconPath = upath.join(__dirname, "src", "images", "icon.png");
+let trayIconPath = upath.join(__dirname, "images", "icon.png");
 let trayIcon = null;
 // 設定データがGCされないようにグローバル宣言
 let settings = null;
