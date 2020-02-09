@@ -31,8 +31,8 @@ jobs:
           npm run dist
       - name: Cleanup artifacts
         run: |
-          npm install shelljs -g
-          shx rm "dist/!(*.exe|*.deb|*.AppImage|*.dmg)"
+          npm install rimraf -g
+          rimraf rm "dist/!(*.exe|*.deb|*.AppImage|*.dmg)"
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
