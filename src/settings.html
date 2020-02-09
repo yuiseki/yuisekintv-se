@@ -56,6 +56,15 @@
         }
       }
 
+      class AudioFilePlayer extends React.Component {
+        render(){
+          const filepath = settings[this.props.num];
+          return el('div', {className: 'audio-file-player'},
+            el('audio', {src: filepath, controls: true})
+          )
+        }
+      }
+
       class AudioFilePath extends React.Component {
         render(){
           const filepath = settings[this.props.num];
@@ -68,6 +77,7 @@
           return el('div', {className: 'audio-file-info'},
             el('h2', {className: 'shortcut-title'}, `shift+ctrl+alt+${this.props.num}`),
             el(AudioFilePath, {num: this.props.num}),
+            el(AudioFilePlayer, {num: this.props.num}),
             el(AudioFileInput, {num: this.props.num})
           )
         }
