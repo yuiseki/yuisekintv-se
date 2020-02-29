@@ -102,12 +102,16 @@ function reloadGlobalHotkeySettings(){
     showInvisiblePlayerWindow(settings['9']);
   });
   globalShortcut.register('Shift+Ctrl+Alt+0', () => {
-    showInvisiblePlayerWindow(settings['0']);
+    invisibleWindow.close();
+    invisibleWindow = null;
   });
 }
 
 // SE再生のために不可視のWindowを生成する関数
 function showInvisiblePlayerWindow(mp3path){
+  if (invisibleWindow!==null){
+    invisibleWindow = null;
+  }
   invisibleWindow = new BrowserWindow({
     width: 0,
     height: 0,

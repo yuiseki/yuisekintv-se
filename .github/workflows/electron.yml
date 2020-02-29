@@ -1,16 +1,11 @@
 name: Electron CD
-
 on: [push]
-
 jobs:
   build:
-
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [windows-latest, macos-latest]
-
     steps:
       - name: Context
         env:
