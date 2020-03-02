@@ -7,6 +7,8 @@ const fs = require('fs');
 // npmのモジュール
 const upath = require('upath');
 
+const util = require('./util.js').util;
+
 // Electronのモジュール
 const electron = require("electron");
 const app = electron.app;
