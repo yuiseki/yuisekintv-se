@@ -102,8 +102,10 @@ function reloadGlobalHotkeySettings(){
     showInvisiblePlayerWindow(settings['9']);
   });
   globalShortcut.register('Shift+Ctrl+Alt+0', () => {
-    invisibleWindow.close();
-    invisibleWindow = null;
+    if (invisibleWindow !== null) {
+      invisibleWindow.close();
+      invisibleWindow = null;
+    }
   });
 }
 
