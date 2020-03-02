@@ -72,35 +72,16 @@ ipcMain.on('update-settings', (event, data)=>{
   reloadGlobalHotkeySettings();
 })
 
-// TODO だれかリファクタリングして
+
 function reloadGlobalHotkeySettings(){
-  globalShortcut.register('Shift+Ctrl+Alt+1', () => {
-    showInvisiblePlayerWindow(settings['1']);
-  });
-  globalShortcut.register('Shift+Ctrl+Alt+2', () => {
-    showInvisiblePlayerWindow(settings['2']);
-  });
-  globalShortcut.register('Shift+Ctrl+Alt+3', () => {
-    showInvisiblePlayerWindow(settings['3']);
-  });
-  globalShortcut.register('Shift+Ctrl+Alt+4', () => {
-    showInvisiblePlayerWindow(settings['4']);
-  });
-  globalShortcut.register('Shift+Ctrl+Alt+5', () => {
-    showInvisiblePlayerWindow(settings['5']);
-  });
-  globalShortcut.register('Shift+Ctrl+Alt+6', () => {
-    showInvisiblePlayerWindow(settings['6']);
-  });
-  globalShortcut.register('Shift+Ctrl+Alt+7', () => {
-    showInvisiblePlayerWindow(settings['7']);
-  });
-  globalShortcut.register('Shift+Ctrl+Alt+8', () => {
-    showInvisiblePlayerWindow(settings['8']);
-  });
-  globalShortcut.register('Shift+Ctrl+Alt+9', () => {
-    showInvisiblePlayerWindow(settings['9']);
-  });
+  for (var i = 1; i <= 9; i++) {
+    const registerTarget = 'Shift+Ctrl+Alt+' + i;
+    const musicFilePath = settings['' + i];
+    globalShortcut.register(registerTarget, () => {
+      showInvisiblePlayerWindow(musicFilePath);
+    });
+  }
+
   globalShortcut.register('Shift+Ctrl+Alt+0', () => {
     if (invisibleWindow !== null) {
       invisibleWindow.close();
