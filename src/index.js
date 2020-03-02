@@ -102,18 +102,20 @@ function reloadGlobalHotkeySettings(){
     showInvisiblePlayerWindow(settings['9']);
   });
   globalShortcut.register('Shift+Ctrl+Alt+0', () => {
-    if (invisibleWindow !== null) {
-      invisibleWindow.close();
-      invisibleWindow = null;
-    }
+    stopMusic();
   });
+}
+
+function stopMusic() {
+  if (invisibleWindow !== null) {
+    invisibleWindow.close();
+    invisibleWindow = null;
+  }
 }
 
 // SE再生のために不可視のWindowを生成する関数
 function showInvisiblePlayerWindow(mp3path){
-  if (invisibleWindow!==null){
-    invisibleWindow = null;
-  }
+  stopMusic();
   invisibleWindow = new BrowserWindow({
     width: 0,
     height: 0,
@@ -134,13 +136,10 @@ function showInvisiblePlayerWindow(mp3path){
   // 画面が表示されたタイミングでの処理
   setTimeout(() => {
     console.log('invisible.html show');
-    invisibleWindow.webContents.send('play-music', mp3path);
+    if (invisibleWindow !== null) {
+      invisibleWindow.webContents.send('play-music', mp3path);
+    }
   }, 500);
-  // 画面閉じたらnullにしとく
-  invisibleWindow.on('closed', () => {
-    console.log('invisible.html closed');
-    invisibleWindow = null;
-  });
 }
 
 // 設定画面を表示する関数
